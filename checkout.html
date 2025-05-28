@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Finalizar Encomenda</title>
+<style>
+
+    body {
+
+      font-family: Arial, sans-serif;
+
+      background-color: #fff0f5;
+
+      padding: 30px;
+
+    }
+
+    h2 {
+
+      color: #d63384;
+
+      text-align: center;
+
+    }
+
+    form {
+
+      max-width: 500px;
+
+      margin: auto;
+
+      background-color: white;
+
+      padding: 20px;
+
+      border-radius: 10px;
+
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    }
+
+    input, textarea {
+
+      width: 100%;
+
+      padding: 12px;
+
+      margin-bottom: 10px;
+
+      border-radius: 5px;
+
+      border: 1px solid #ccc;
+
+    }
+
+    button {
+
+      background-color: #d63384;
+
+      color: white;
+
+      border: none;
+
+      padding: 12px;
+
+      border-radius: 5px;
+
+      font-size: 16px;
+
+      cursor: pointer;
+
+    }
+
+    button:hover {
+
+      background-color: #ad296a;
+
+    }
+</style>
+</head>
+<body>
+<h2>Finalizar Encomenda</h2>
+<form id="form-encomenda">
+<input type="text" name="nome" placeholder="Nome completo" required>
+<input type="text" name="morada" placeholder="Morada completa" required>
+<input type="text" name="codigo_postal" placeholder="Código Postal" required>
+<input type="text" name="cidade" placeholder="Cidade" required>
+<input type="tel" name="telefone" placeholder="Número de telemóvel" required>
+<textarea name="detalhes" placeholder="Detalhes da encomenda (ex: urso rosa, cheiro baunilha)" required></textarea>
+<button type="submit">Enviar Encomenda</button>
+</form>
+<script>
+
+    document.getElementById("form-encomenda").addEventListener("submit", function(e) {
+
+      e.preventDefault();
+
+      const dados = new FormData(this);
+
+      fetch("https://script.google.com/macros/s/AKfycbwwmBSnjylfSU2jk0FryRzMklzAiWESEO96eQR_Z1z0Zo9hhcbnmrFus3yR0N-uHO-ULQ/exec", {
+
+        method: "POST",
+
+        body: dados
+
+      })
+
+      .then(res => res.text())
+
+      .then(msg => {
+
+        alert("✅ Encomenda enviada com sucesso!");
+
+        document.getElementById("form-encomenda").reset();
+
+      })
+
+      .catch(err => {
+
+        alert("❌ Ocorreu um erro. Tente novamente.");
+
+        console.error(err);
+
+      });
+
+    });
+</script>
+</body>
+</html>
+ 

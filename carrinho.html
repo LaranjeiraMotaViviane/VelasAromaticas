@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff0f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #d63384;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ffc0cb;
+            color: #fff;
+        }
+
+        .empty {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.2rem;
+        }
+
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .btn-encomendar {
+
+            background-color: #d63384;
+
+            color: white;
+
+            border: none;
+
+            padding: 14px 28px;
+
+            font-size: 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            margin-top: 30px;
+
+            transition: background-color 0.3s ease;
+
+        }
+
+        .btn-encomendar:hover {
+
+            background-color: #a32060;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🛒 Carrinho de Compras</h1>
+    <div id="carrinho-container"></div>
+
+    <script>
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+        const container = document.getElementById('carrinho-container');
+
+        function atualizarCarrinho() {
+            if (carrinho.length === 0) {
+                container.innerHTML = '<p class="empty">Seu carrinho está vazio.</p>';
+                return;
+            }
+
+            let total = 0;
+            let tableHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Cor</th>
+            <th>Cheiro</th>
+            <th>Preço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+            carrinho.forEach((item, index) => {
+                total += item.preco;
+                tableHTML += `
+        <tr>
+          <td>${item.nome}</td>
+          <td>${item.cor}</td>
+          <td>${item.cheiro}</td>
+          <td>€ ${item.preco.toFixed(2)}</td>
+          <td><button onclick="removerItem(${index})">Remover</button></td>
+        </tr>
+      `;
+            });
+
+            tableHTML += `
+        </tbody>
+      </table>
+      <div class="total">Total: € ${total.toFixed(2)}</div>
+    `;
+
+            container.innerHTML = tableHTML;
+        }
+
+        function removerItem(index) {
+            carrinho.splice(index, 1);
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            atualizarCarrinho();
+        }
+
+        atualizarCarrinho();
+    </script>
+    <div style="text-align: center; margin-top: 30px;">
+        <button onclick="history.back()"
+            style="padding: 10px 20px; background-color: #ffc0cb; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer;">
+            ⬅ Voltar
+        </button>
+    </div>
+    <a href="checkout.html">
+        <button class="btn-encomendar">📝 Encomendar</button>
+    </a>
+</body>
+
+</html>
